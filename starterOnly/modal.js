@@ -47,15 +47,18 @@ function validate() {
       isValid = false;
   }
 
+  // Validation du nom
   if (!first.validity.valid) {
     document.getElementById("error-last").style.display = 'block';
     isValid = false;
 }
 
+
   if (!form.checkValidity()) {
     return false;
   }
 
+  // Validation des radios
   radios.forEach((radio) => {
     if (radio.checked) {
       radioSelected = true;
@@ -66,6 +69,7 @@ function validate() {
     return false;
   }
 
+  // Validation des radios
   if (!checkbox1.checked) {
     return false;
   }
