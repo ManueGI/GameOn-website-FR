@@ -27,38 +27,74 @@ closeBtn.addEventListener("click", closeModal);
 // close modal form
 function closeModal() {
   modalbg.style.display = "none";
+  isValid = true;
+  document
+    .querySelectorAll(".error-message")
+    .forEach((el) => (el.style.display = "none"));
 }
 
 // Form validation
+let isValid = true;
+
+function getElement(id) {
+  return document.getElementById(id);
+}
+
+function showError(errorId) {
+  return (document.getElementById(errorId).style.display = "block");
+}
+
+const form = document.forms["reserve"];
+
 function validate() {
-  const form = document.forms["reserve"];
-  const radios = form["location"];
-  let radioSelected = false;
-  const checkbox1 = document.getElementById("checkbox1");
-
-  document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
-
-  let isValid = true;
+  isValid = true;
+  document
+    .querySelectorAll(".error-message")
+    .forEach((el) => (el.style.display = "none"));
 
   // Validation du prénom
   const first = document.getElementById("first");
   if (!first.validity.valid) {
-      document.getElementById("error-first").style.display = 'block';
-      isValid = false;
+    showError("error-first");
+    isValid = false;
   }
 
   // Validation du nom
-  if (!first.validity.valid) {
-    document.getElementById("error-last").style.display = 'block';
+  const last = getElement("last");
+  if (!last.validity.valid) {
+    showError("error-last");
     isValid = false;
-}
+  }
 
+  // Validation du mail
+  const email = getElement("email");
+  if (email.validity.valueMissing || email.validity.typeMismatch) {
+    showError("error-email");
+    isValid = false;
+  }
 
-  if (!form.checkValidity()) {
-    return false;
+  // Validation de la date de naissance
+  const birthDate = getElement("birthdate");
+  const today = new Date();
+  const birthDateValue = new Date(birthDate.value);
+  const age = today.getFullYear() - birthDateValue.getFullYear();
+  if (!age || age < 15 || age > 99 || birthDateValue > today) {
+    showError("error-birthdate");
+    isValid = false;
+  }
+
+  // Validation de la quantité
+  const quantity = getElement("quantity")
+  if (!quantity.value || quantity.value < 0 || quantity.value > 99) {
+    console.log("quantity")
+    showError("error-quantity");
+    isValid = false;
   }
 
   // Validation des radios
+  const radios = form["location"];
+  let radioSelected = false;
+
   radios.forEach((radio) => {
     if (radio.checked) {
       radioSelected = true;
@@ -66,13 +102,40 @@ function validate() {
   });
 
   if (!radioSelected) {
-    return false;
+    document.getElementById("error-location").style.display = "block";
+    isValid = false;
   }
 
-  // Validation des radios
+  // Validation des conditions
+  const checkbox1 = getElement("checkbox1");
   if (!checkbox1.checked) {
-    return false;
+    document.getElementById("error-checkbox1").style.display = "block";
+    isValid = false;
   }
 
-  return true;
+  if (isValid) {
+    return true; 
+  } else {
+    return false;
+  }
 }
+
+form.addEventListener("submit", (event) => {
+  if (!validate()) {
+    event.preventDefault();
+  } else {
+    event.preventDefault();
+    const modalSuccess = getElement("modalsuccess")
+    modalSuccess.style.display="block"
+    closeModal(); // Close main modal (optional)
+    console.log("success");
+    const closeSuccessBtn = getElement('closemodal');
+    
+    closeSuccessBtn.addEventListener('click', () => {
+      modalSuccess.style.display = 'none';
+    });
+  }
+});
+
+
+
