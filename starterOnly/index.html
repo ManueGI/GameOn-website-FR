@@ -119,7 +119,7 @@
                 class="formData">
                 <label>À combien de tournois GameOn avez-vous déjà participé ?</label><br>
                 <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
-                <span class="error-message" id="error-quantity">Veuillez entrer une adresse mail valide.</span>
+                <span class="error-message" id="error-quantity">Veuillez répondre à  ette question.</span>
               </div>
               <p class="text-label">A quel tournoi souhaitez-vous participer cette année ?</p>
               <div
@@ -196,6 +196,7 @@
                   <span class="checkbox-icon"></span>
                   Portland</label
                 >
+                <span class="error-message" id="error-location">Veuillez choisir au moins une ville.</span>
               </div>
 
               <div
@@ -205,12 +206,12 @@
                   type="checkbox"
                   id="checkbox1"
                   required
-                  checked
                 />
                 <label class="checkbox2-label" for="checkbox1" required>
                   <span class="checkbox-icon"></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
+                <span class="error-message" id="error-location">Vous devez vérifier que vous acceptez les termes et conditions.</span>
                 <br>
                 <input class="checkbox-input" type="checkbox" id="checkbox2" />
                 <label class="checkbox2-label" for="checkbox2">
