@@ -52,10 +52,16 @@ img {
   font-family: Roboto, sans-serif;
 }
 
+.error-message {
+  display: none;
+  font-size: 13px;
+  color: red;
+}
+
 .topnav a:hover {
   background-color: #ff0000;
   color: #ffffff;
-  border-radius: 15px;
+  border-radius: 12px;
 }
 
 .topnav a.active {

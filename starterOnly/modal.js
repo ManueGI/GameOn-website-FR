@@ -11,6 +11,7 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
+const closeBtn = document.querySelector(".close");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -20,4 +21,54 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
+// close modal event
+closeBtn.addEventListener("click", closeModal);
 
+// close modal form
+function closeModal() {
+  modalbg.style.display = "none";
+}
+
+// Form validation
+function validate() {
+  const form = document.forms["reserve"];
+  const radios = form["location"];
+  let radioSelected = false;
+  const checkbox1 = document.getElementById("checkbox1");
+
+  document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+
+  let isValid = true;
+
+  // Validation du prénom
+  const first = document.getElementById("first");
+  if (!first.validity.valid) {
+      document.getElementById("error-first").style.display = 'block';
+      isValid = false;
+  }
+
+  if (!first.validity.valid) {
+    document.getElementById("error-last").style.display = 'block';
+    isValid = false;
+}
+
+  if (!form.checkValidity()) {
+    return false;
+  }
+
+  radios.forEach((radio) => {
+    if (radio.checked) {
+      radioSelected = true;
+    }
+  });
+
+  if (!radioSelected) {
+    return false;
+  }
+
+  if (!checkbox1.checked) {
+    return false;
+  }
+
+  return true;
+}
