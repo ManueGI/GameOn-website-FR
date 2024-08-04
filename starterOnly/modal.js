@@ -30,11 +30,31 @@ function closeModal() {
 }
 
 // Form validation
-function validateForm() {
+function validate() {
+  // Form elements
   const form = document.forms["reserve"];
+  const first = document.getElementById("first");
+  const last = document.getElementById("last");
   const radios = form["location"];
   let radioSelected = false;
   const checkbox1 = document.getElementById("checkbox1");
+
+  document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+
+  let isValid = true;
+
+  // Validation du prénom
+  if (!first.validity.valid) {
+      document.getElementById("error-first").style.display = 'block';
+      isValid = false;
+  }
+
+  // Validation du nom
+  if (!first.validity.valid) {
+    document.getElementById("error-last").style.display = 'block';
+    isValid = false;
+}
+
   if (!form.checkValidity()) {
     return false;
   }
@@ -46,13 +66,12 @@ function validateForm() {
   });
 
   if (!radioSelected) {
-    alert("Veuillez sélectionner un tournoi.");
     return false;
   }
 
   if (!checkbox1.checked) {
-    alert("Veuillez sélectionner un tournoi.");
     return false;
   }
+
   return true;
 }

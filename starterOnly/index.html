@@ -60,6 +60,7 @@
               name="reserve"
               action="index.html"
               method="get"
+              novalidate
               onsubmit="return validate();"
             >
               <div
@@ -73,6 +74,9 @@
                   minlength="2"
                   required
                 /><br>
+                <span class="error-message" id="error-first">
+                  Veuillez entrer 2 caractères ou plus pour le champ du prénom.
+                </span>
               </div>
               <div
                 class="formData">
@@ -85,6 +89,9 @@
                   minlength="2"
                   required
                 /><br>
+                <span class="error-message" id="error-last">
+                  Veuillez entrer 2 caractères ou plus pour le champ du nom.
+                </span>
               </div>
               <div
                 class="formData">
