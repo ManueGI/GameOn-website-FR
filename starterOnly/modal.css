@@ -52,10 +52,16 @@ img {
   font-family: Roboto, sans-serif;
 }
 
+.error-message {
+  display: none;
+  font-size: 13px;
+  color: red;
+}
+
 .topnav a:hover {
   background-color: #ff0000;
   color: #ffffff;
-  border-radius: 15px;
+  border-radius: 12px;
 }
 
 .topnav a.active {
@@ -115,8 +121,6 @@ main {
   margin: 1px 20px 15px;
   border-radius: 2rem;
   text-align: justify;
-
-
 }
 
 .modal-btn {
@@ -133,6 +137,10 @@ main {
 
 .modal-btn:hover {
   background: #3876ac;
+}
+
+#modalsuccess {
+  position: absolute;
 }
 
 .footer {
@@ -476,6 +484,20 @@ input[data-error]::after {
 }
 .hero-section > .btn-signup {
   display: none;
+}
+
+.contentmodalsuccess {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.modalsuccess-body {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px;
 }
 footer {
   padding-left: 2vw;
