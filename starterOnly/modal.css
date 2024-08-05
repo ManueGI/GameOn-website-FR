@@ -139,10 +139,6 @@ main {
   background: #3876ac;
 }
 
-#modalsuccess {
-  position: absolute;
-}
-
 .footer {
   margin: 20px;
   padding: 10px;
@@ -486,18 +482,19 @@ input[data-error]::after {
   display: none;
 }
 
-.contentmodalsuccess {
-  display: flex;
+.content-success {
+  display: none;
   flex-direction: column;
   justify-content: flex-end;
 }
 
 .modalsuccess-body {
-  height: 50%;
+  height: 60%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 30px;
+  text-align: center;
 }
 footer {
   padding-left: 2vw;
