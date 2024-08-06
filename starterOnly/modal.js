@@ -44,7 +44,7 @@ function closeModal() {
 
 // Fonction pour réinitialiser les champs du formulaire
 function resetForm() {
-  modalForm.reset();
+  form.reset();
 }
 
 // Validation du formulaire
@@ -191,13 +191,13 @@ form.addEventListener("submit", (event) => {
       form.submit();
       console.log("Formulaire soumis avec succès !");
     }
-    submitForm();
 
     // Ajouter des événements pour fermer la modal de succès
     closeSuccessBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
         modalSuccess.style.display = "none";
         closeModal();
+        submitForm();
       });
     });
   }
