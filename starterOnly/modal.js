@@ -2,23 +2,20 @@
 const modalbg = document.querySelector(".bground");
 const modalForm = document.getElementById("modal-form");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelector(".close");
 const modalSuccess = document.getElementById("modal-success");
 const closeSuccessBtns = modalSuccess.querySelectorAll(".closemodalsuccess");
+const form = document.forms["reserve"];
 
 // Messages d'erreur
 const errorMessages = {
-  "error-first":
-    "Veuillez entrer 2 caractères ou plus pour le champ du prénom.",
+  "error-first": "Veuillez entrer 2 caractères ou plus pour le champ du prénom.",
   "error-last": "Veuillez entrer 2 caractères ou plus pour le champ du nom.",
   "error-email": "Veuillez entrer une adresse mail valide.",
   "error-birthdate": "Veuillez entrer une date de naissance valide.",
-  "error-quantity":
-    "Veuillez répondre à cette question (entre 0 et 99 tournois).",
+  "error-quantity": "Veuillez répondre à cette question (entre 0 et 99 tournois).",
   "error-location": "Veuillez choisir au moins une ville.",
-  "error-checkbox1":
-    "Vous devez vérifier que vous acceptez les termes et conditions.",
+  "error-checkbox1": "Vous devez vérifier que vous acceptez les termes et conditions.",
 };
 
 // Événement pour ouvrir la modal
@@ -35,20 +32,10 @@ closeBtn.addEventListener("click", closeModal);
 // Fonction pour fermer la modal
 function closeModal() {
   modalbg.style.display = "none";
-  resetForm(); // Réinitialiser les champs du formulaire en fermant la modal
-  isValid = true;
-  document
-    .querySelectorAll(".error-message")
-    .forEach((el) => (el.style.display = "none"));
-}
-
-// Fonction pour réinitialiser les champs du formulaire
-function resetForm() {
   form.reset();
+  isValid = true;
+  document.querySelectorAll(".error-message").forEach((el) => (el.style.display = "none"));
 }
-
-// Validation du formulaire
-let isValid = true;
 
 // Fonction pour obtenir un élément par son ID
 function getElement(id) {
@@ -56,15 +43,25 @@ function getElement(id) {
 }
 
 // Fonction pour afficher les messages d'erreur
-function showError(errorId) {
-  const errorElement = document.getElementById(errorId);
+function showError(errorId, formFieldId) {
+  let errorElement = getElement(errorId);
+  let formField = document.getElementById(formFieldId);
+
+  if (!errorElement) {
+    errorElement = document.createElement("span");
+    errorElement.id = errorId;
+    errorElement.className = "error-message";
+    formField.append(errorElement);
+  }
+
   errorElement.textContent = errorMessages[errorId];
   errorElement.style.display = "block";
 }
 
-const form = document.forms["reserve"];
 
-// Fonction de validation
+// Validation du formulaire
+let isValid = true;
+
 function validate() {
   isValid = true;
   document.querySelectorAll(".error-message").forEach((el) => {
@@ -82,7 +79,7 @@ function validate() {
       throw new Error("error-first");
     }
   } catch (error) {
-    errors.push(error.message);
+    errors.push({ errorId: error.message, formElement: "first-field" });
   }
 
   // Validation du nom
@@ -92,7 +89,7 @@ function validate() {
       throw new Error("error-last");
     }
   } catch (error) {
-    errors.push(error.message);
+    errors.push({ errorId: error.message, formElement: "last-field" });
   }
 
   // Validation de l'email
@@ -102,7 +99,7 @@ function validate() {
       throw new Error("error-email");
     }
   } catch (error) {
-    errors.push(error.message);
+    errors.push({ errorId: error.message, formElement: "email-field" });
   }
 
   // Validation de la date de naissance
@@ -111,11 +108,11 @@ function validate() {
     const today = new Date();
     const birthDateValue = new Date(birthDate.value);
     const age = today.getFullYear() - birthDateValue.getFullYear();
-    if (!age || age < 15 || age > 99 || birthDateValue > today) {
+    if (!birthDate.value || age < 15 || age > 99 || birthDateValue > today) {
       throw new Error("error-birthdate");
     }
   } catch (error) {
-    errors.push(error.message);
+    errors.push({ errorId: error.message, formElement: "birthdate-field" });
   }
 
   // Validation de la quantité
@@ -125,25 +122,18 @@ function validate() {
       throw new Error("error-quantity");
     }
   } catch (error) {
-    errors.push(error.message);
+    errors.push({ errorId: error.message, formElement: "quantity-field" });
   }
 
   // Validation des boutons radio
   try {
-    const radios = form["location"];
-    let radioSelected = false;
-
-    radios.forEach((radio) => {
-      if (radio.checked) {
-        radioSelected = true;
-      }
-    });
-
+    const radios = Array.from(form["location"]);
+    const radioSelected = radios.some((radio) => radio.checked);
     if (!radioSelected) {
       throw new Error("error-location");
     }
   } catch (error) {
-    errors.push(error.message);
+    errors.push({ errorId: error.message, formElement: "location-field" });
   }
 
   // Validation de la case à cocher
@@ -153,12 +143,13 @@ function validate() {
       throw new Error("error-checkbox1");
     }
   } catch (error) {
-    errors.push(error.message);
+    errors.push({ errorId: error.message, formElement: "checkbox1-field" });
   }
+
 
   // Afficher les erreurs
   if (errors.length > 0) {
-    errors.forEach((error) => showError(error));
+    errors.forEach(({ errorId, formElement }) => showError(errorId, formElement));
     isValid = false;
   }
 
@@ -167,23 +158,17 @@ function validate() {
 
 // Événement lors de la soumission du formulaire
 form.addEventListener("submit", (event) => {
-  if (!validate()) {
-    // Annuler la soumission du formulaire en cas d'erreur
-    event.preventDefault();
-  } else {
-    // Annuler la soumission par défaut
-    event.preventDefault();
+  event.preventDefault();
 
+  if (validate()) {
     // Obtenir la hauteur du formulaire
     const formHeight = modalForm.offsetHeight;
 
-    // Cahcher le formulaire
+    // Caché le formulaire
     modalForm.style.display = "none";
 
-    // Afficher la modale de succès
+    // Afficher la modal de succès
     modalSuccess.style.display = "flex";
-
-    // Appliquer la hauteur à la modal de succès
     modalSuccess.style.height = formHeight + "px";
 
     // Fonction pour soumettre le formulaire après la fermeture de la modal
