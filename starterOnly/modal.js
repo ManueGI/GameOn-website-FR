@@ -24,6 +24,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // Fonction pour ouvrir la modal
 function launchModal() {
   modalbg.style.display = "block";
+  modalForm.style.display = "block";
 }
 
 // Événement pour fermer la modal
@@ -161,6 +162,8 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   if (validate()) {
+    //ici : logique de validation du formulaire et de récupération des données entrées par l'utilisateur du site
+
     // Obtenir la hauteur du formulaire
     const formHeight = modalForm.offsetHeight;
 
@@ -171,18 +174,11 @@ form.addEventListener("submit", (event) => {
     modalSuccess.style.display = "flex";
     modalSuccess.style.height = formHeight + "px";
 
-    // Fonction pour soumettre le formulaire après la fermeture de la modal
-    function submitForm() {
-      form.submit();
-      console.log("Formulaire soumis avec succès !");
-    }
-
     // Ajouter des événements pour fermer la modal de succès
     closeSuccessBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
         modalSuccess.style.display = "none";
         closeModal();
-        submitForm();
       });
     });
   }

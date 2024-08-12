@@ -35,10 +35,10 @@ img {
   margin: 3.5%;
 }
 .header-logo {
-    float: left;
+  float: left;
 }
 .main-navbar {
-    float: right;
+  float: right;
 }
 .topnav a {
   float: left;
@@ -79,7 +79,9 @@ img {
 }
 
 @media screen and (max-width: 768px) {
-  .topnav a {display: none;}
+  .topnav a {
+    display: none;
+  }
   .topnav a.icon {
     float: right;
     display: block;
@@ -87,7 +89,9 @@ img {
 }
 
 @media screen and (max-width: 768px) {
-  .topnav.responsive {position: relative;}
+  .topnav.responsive {
+    position: relative;
+  }
   .topnav.responsive .icon {
     position: absolute;
     right: 0;
@@ -97,17 +101,6 @@ img {
     float: none;
     display: block;
     text-align: left;
-  }
-}
-
-
-
- @media screen and (max-width: 540px) {
-  .topnav a {display: none;}
-  .topnav a.icon {
-    float: right;
-    display: block;
-    margin-top: -15px;
   }
 }
 
@@ -249,12 +242,7 @@ input {
 .formData[data-error-visible="true"] .text-control {
   border: 2px solid #e54858;
 }
-/*
-input[data-error]::after {
-    content: attr(data-error);
-    font-size: 0.4em;
-    color: red;
-} */
+
 .checkbox-label,
 .checkbox2-label {
   position: relative;
@@ -504,15 +492,19 @@ footer {
   padding-right: 2vw;
   margin: 0 20px;
 }
+
 @media screen and (max-width: 800px) {
   .hero-section {
     display: block;
     box-shadow: unset;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
   .hero-content {
     background: #fff;
     color: #000;
     padding: 20px;
+    min-width: 100%;
   }
   .hero-content::after {
     content: unset;
@@ -525,7 +517,7 @@ footer {
     white-space: normal;
   }
   .hero-text {
-    width: unset;
+    width: 100%;
     font-size: 1.5rem;
   }
   .hero-img img {
@@ -540,6 +532,38 @@ footer {
   .copyrights {
     margin-top: 50px;
     text-align: center;
+  }
+
+  #myTopnav {
+    overflow: visible;
+    height: 60px;
+  }
+
+  .topnav.responsive .navbar-links {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    background-color: white;
+    border: 1px solid;
+    border-radius: 25px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .topnav a {
+    display: none;
+  }
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+
+  .hero-headline {
+    width: 100%;
+    font-size: 3rem;
+    font-weight: normal;
+    white-space: normal;
   }
 }
 
